@@ -53,6 +53,13 @@ Environment postfix to identify password. Default `basicauth_pass`
 
 ## Users
 Object to transmit user credentials:
+```js
+var defaultUsers = {
+  mike: 'secret',
+  john: 'secret',
+  ... 
+}
+```
 
 # License
 
