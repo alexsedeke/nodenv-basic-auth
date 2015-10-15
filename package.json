@@ -1,6 +1,6 @@
 {
   "name": "nodenv-basic-auth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Enable basic auth via environment variables for usernames and password",
   "main": "index.js",
   "repository": {
@@ -15,7 +15,9 @@
     "env",
     "basic-auth"
   ],
-  "engine": "node >= 4.0.1",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "author": "Jan Nahody <jan.nahody@gmail.com>",
   "license": "MIT",
   "dependencies": {
