@@ -1,0 +1,25 @@
+{
+  "name": "nodenv-basic-auth",
+  "version": "0.1.0",
+  "description": "Enable basic auth via environment variables for usernames and password",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/nahody/nodenv-basic-auth.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "env",
+    "basic-auth"
+  ],
+  "engine": "node >= 4.0.1",
+  "author": "Jan Nahody <jan.nahody@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "basic-auth": "^1.0.3",
+    "lodash": "^3.10.1"
+  }
+}
