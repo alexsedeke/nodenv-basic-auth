@@ -1,24 +1,18 @@
 'use strict';
 
-var _ = require('lodash');
 var basicAuth = require('basic-auth');
 
-class NodenvBasicAuth {
+class NodeEnvBasicAuth {
 
     constructor(options, users) {
         // options
         this.options = {
-            userPrefix: 'basicauth_user',
-            passPrefix: 'basicauth_pass'
+            userPrefix: 'basicauth_user' || options.userPrefix,
+            passPrefix: 'basicauth_pass' || options.passPrefix
         };
 
         this.auth = null;
-        this.users = {};
-
-        // merge users if predefined exist
-        if (typeof users === 'object') {
-            _.merge(this.users, users);
-        }
+        this.users = users || {};
 
         this.dispatchEnv();
     }
@@ -39,7 +33,7 @@ class NodenvBasicAuth {
                     this.users[process.env[key]] = process.env[this.options.passPrefix + postpend];
                 }
             }
-        });
+        }, this);
     };
 
     /**
@@ -64,25 +58,19 @@ class NodenvBasicAuth {
      * Register auth to middleware
      */
     register(req, res, next) {
-        // use only if username and password is set as env variable
-        if (_.isUndefined(process.env.basicauth_name) ||  _.isUndefined(process.env.basicauth_pass)) {
-            return next();
-        }
 
-        // init basic auth if not already done
-        if (this.auth === null) {
-            this.auth = basicAuth(req);
-        }
+        // parse auth header
+        let credentials = basicAuth(req);
 
         // verify basic-auth is initiated else return unauthorized
-        if (!this.auth || !this.auth.name || !this.auth.pass) {
-            return this.unauthorized(res);
+        if (!credentials|| !credentials.name || !credentials.pass) {
+            return NodeEnvBasicAuth.unauthorized(res);
         }
 
-        if (this.verifyCredentials(this.auth.name, this.auth.pass)) {
+        if (this.verifyCredentials(credentials.name, credentials.pass)) {
             return next();
         } else {
-            return this.unauthorized(res);
+            return NodeEnvBasicAuth.unauthorized(res);
         }
     }
 
@@ -93,4 +81,7 @@ class NodenvBasicAuth {
 
 }
 
-module.exports = NodeEnvBasicAuth;
+module.exports = function(options, users) {
+    var instance = new NodeEnvBasicAuth(options, users);
+    return instance.register.bind(instance);
+};
