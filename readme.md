@@ -13,6 +13,8 @@ By default the prefix for username is `basicauth_user` and for password `basicau
 To add multiple users, add an additional idententication string to parameter name. This additional string 
 must be same for username and password. 
 
+Works in Node.js v4+ with the `--harmony` flag, or Node.js v6+ without any flags.
+
 ### Example
 ```shell
 export basicauth_user = user1
@@ -30,12 +32,15 @@ export basicauth_password_mike = secret
 ## Usage
 ```js
 // Initialize nodenv-basic-auth
-var NodenvBasicAuth = require('nodenv-basic-auth');
-var auth = new NodenvBasicAuth();
-// enable auth on route
+var auth = require('nodenv-basic-auth')();
+
+// EITHER use auth on specific routes
 app.get('/home', auth, function(req, res) {
  res.send('Hello World');
 });
+
+// OR use it site-wide
+app.use(auth);
 ```
 
 ## Extend usage
@@ -54,7 +59,7 @@ Environment postfix to identify password. Default `basicauth_pass`
 ## Users
 Object to transmit user credentials:
 ```js
-var defaultUsers = {
+var users = {
   mike: 'secret',
   john: 'secret',
   ... 

@@ -13,15 +13,17 @@
   "keywords": [
     "node",
     "env",
-    "basic-auth"
+    "basic-auth",
+    "basic",
+    "auth",
+    "express"
   ],
   "engines": {
-    "node": ">= 4.0.0"
+    "node": ">= 6.0.0"
   },
   "author": "Jan Nahody <jan.nahody@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "basic-auth": "^1.0.3",
-    "lodash": "^3.10.1"
+    "basic-auth": "^1.0.3"
   }
 }
